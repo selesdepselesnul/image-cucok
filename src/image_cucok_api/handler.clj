@@ -16,6 +16,10 @@
   (POST "/image_revert"
         {{{tempfile :tempfile filename :filename} :file} :params :as params}
         (do
+          (-> tempfile
+              read-image-by-file
+              invert-image
+              (write-image "jpg" "resources/public/new_image.jpg"))
           (response {:success filename})))
   (route/not-found "Not Found"))
 
