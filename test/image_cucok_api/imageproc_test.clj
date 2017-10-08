@@ -10,8 +10,12 @@
 
 (testing "invert-image"
   (testing "with invalid path"
-    (is (thrown? Exception (invert-image-test "resources/test.jpg"))))
+    (is (thrown? Exception (invert-image-test "resources/public/test.jpg"))))
   (testing "with valid path"
-    (is (instance? Image (invert-image-test "resources/test.jpg")))))
+    (is (instance? Image (invert-image-test "resources/public/example.jpg")))))
 
+(testing "get-extension"
+  (testing "with valid file name"
+    (is (= "jpg" (get-extension "test.jpg")))))
+  
 (run-all-tests)
