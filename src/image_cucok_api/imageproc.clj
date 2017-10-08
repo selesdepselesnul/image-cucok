@@ -14,6 +14,9 @@
 (defn read-image [path]
   (-> path file ImageIO/read))
 
+(defn read-image-by-file [file]
+  (ImageIO/read file))
+
 (defn get-extension [path]
   (-> path
       fs/extension
