@@ -8,7 +8,7 @@
                  [net.mikera/imagez "0.12.0"]
                  [me.raynes/fs "1.4.6"]]
   :plugins [[lein-ring "0.9.7"]]
-  :ring {:handler image-cucok-api.handler/app-routes}
+  :ring {:handler image-cucok-api.handler/app}
   :profiles
   {:dev {:dependencies [[javax.servlet/servlet-api "2.5"]
                         [ring/ring-mock "0.3.0"]]}}
