@@ -6,7 +6,8 @@
                  [compojure "1.5.1"]
                  [ring/ring-defaults "0.2.1"]
                  [net.mikera/imagez "0.12.0"]
-                 [me.raynes/fs "1.4.6"]]
+                 [me.raynes/fs "1.4.6"]
+                 [ring/ring-json "0.4.0"]]
   :plugins [[lein-ring "0.9.7"]]
   :ring {:handler image-cucok-api.handler/app}
   :profiles
