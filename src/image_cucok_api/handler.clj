@@ -5,7 +5,7 @@
 
 (defroutes app-routes
   (GET "/" [] "Hello World")
-  (POST "/" [] "Hello World")
+  (POST "/" [] "Hello World Post")
   (route/not-found "Not Found"))
 
 (def app
