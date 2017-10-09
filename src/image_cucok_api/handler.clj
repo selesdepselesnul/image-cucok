@@ -15,11 +15,13 @@
   (GET "/" [] "Hello World")
   (POST "/image_revert"
         {{{tempfile :tempfile filename :filename} :file} :params :as params}
-        (let [returned-file
+        (let [file-extension (get-extension filename)
+              returned-file
               (-> tempfile
                   read-image-by-file
                   invert-image
-                  (write-image "jpg" "resources/public/new_image.jpg"))]
+                  (write-image file-extension
+                               (str "resources/public/image." file-extension)))]
           (response {:success returned-file})))
   (route/not-found "Not Found"))
 
