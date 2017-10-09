@@ -24,9 +24,11 @@
       (nth 1 nil)))
 
 (defn write-image [image ext dest]
-  (ImageIO/write image
+  (let [status
+        (ImageIO/write image
                  ext
-                 (File. dest)))
+                 (File. dest))]
+    (if status dest nil)))
 
 (defn invert-image [image]
   (filter-image image (filt/invert)))
