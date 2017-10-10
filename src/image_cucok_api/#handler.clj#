@@ -14,7 +14,6 @@
   (-> (java.time.LocalDateTime/now)
       (.format (java.time.format.DateTimeFormatter/ofPattern "yyyy_MM_dd_HH_mm_ss"))))
 
-
 (def site-defaults-setting
   (assoc-in site-defaults
             [:security :anti-forgery]
@@ -29,15 +28,15 @@
   (POST "/image_revert"
         {{{tempfile :tempfile filename :filename} :file} :params :as params}
         (let [file-extension (get-extension filename)
-              new-file-name (str (now-str) "." file-extension)
+              new-file-name (     ) 
               returned-file
               (-> tempfile
                   read-image-by-file
                   invert-image
                   (write-image file-extension
-                               (str "resources/public/" new-file-name)))]
-              (response {:url (str (:server-name params) ":" (:server-port params) "/images/" new-file-name)})))
-  (route/resources "/"))
+                               (str "resources/public/"  "." file-extension) ))
+              (response {:url (str (:server-name params) ":" (:server-port params) "/images/" "image." file-extension)})
+              (route/resources "/")])))
 
 (def app
   (routes
