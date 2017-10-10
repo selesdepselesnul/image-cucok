@@ -30,7 +30,7 @@
                   invert-image
                   (write-image file-extension
                                (str "resources/public/image." file-extension)))]
-          (response {:success returned-file})))
+          (response {:url (str (:server-name params) ":" (:server-port params) "/images/" "image." file-extension)})))
   (route/resources "/"))
 
 (def app
