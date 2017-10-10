@@ -34,5 +34,5 @@
   (filter-image image (filt/invert)))
 
 (defn is-valid-extension? [extension]
-  (some #(= % extension) ["jpg" "jpeg" "png" "bmp"]))
+  (contains? #{"jpg" "jpeg" "png" "bmp"} extension))
 
