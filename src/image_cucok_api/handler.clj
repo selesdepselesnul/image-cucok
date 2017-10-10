@@ -1,12 +1,9 @@
 (ns image-cucok-api.handler
   (:require [compojure.core :refer :all]
             [compojure.route :as route]
-            [ring.middleware.params :refer [wrap-params]]
-            [ring.middleware.multipart-params :refer [wrap-multipart-params]]
-            [ring.middleware.keyword-params :refer [wrap-keyword-params]]
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
             [ring.middleware.json :refer [wrap-json-response]]
-            [ring.util.response :refer [response resource-response content-type]]
+            [ring.util.response :refer [response resource-response]]
             [image-cucok-api.imageproc :refer :all]
             [clojure.java.io :as io]))
 
@@ -14,6 +11,8 @@
   (-> (java.time.LocalDateTime/now)
       (.format (java.time.format.DateTimeFormatter/ofPattern "yyyy_MM_dd_HH_mm_ss"))))
 
+(defn generate-unique-name [file-extension]
+  (str "img_" (now-str) "." file-extension))
 
 (def site-defaults-setting
   (assoc-in site-defaults
@@ -29,7 +28,7 @@
   (POST "/image_revert"
         {{{tempfile :tempfile filename :filename} :file} :params :as params}
         (let [file-extension (get-extension filename)
-              new-file-name (str (now-str) "." file-extension)
+              new-file-name (generate-unique-name file-extension)
               returned-file
               (-> tempfile
                   read-image-by-file
