@@ -20,8 +20,8 @@
 
 (testing "is-valid-extension?"
   (testing "with valid extension"
-    (is (true? (is-valid-extension? ".jpg"))))
+    (is (true? (is-valid-extension? "jpg"))))
   (testing "with invalid extension"
-    (is (nil? (is-valid-extension? ".pdf")))))
+    (is (nil? (is-valid-extension? "pdf")))))
 
 (run-all-tests)
