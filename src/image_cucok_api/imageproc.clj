@@ -33,4 +33,6 @@
 (defn invert-image [image]
   (filter-image image (filt/invert)))
 
+(defn is-valid-extension? [extension]
+  (some #(= % extension) ["jpg" "jpeg" "png" "bmp"]))
 

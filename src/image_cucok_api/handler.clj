@@ -27,15 +27,17 @@
 (defroutes api-routes
   (POST "/image_revert"
         {{{tempfile :tempfile filename :filename} :file} :params :as params}
-        (let [file-extension (get-extension filename)
-              new-file-name (generate-unique-name file-extension)
-              returned-file
-              (-> tempfile
-                  read-image-by-file
-                  invert-image
-                  (write-image file-extension
-                               (str "resources/public/" new-file-name)))]
-              (response {:url (str (:server-name params) ":" (:server-port params) "/images/" new-file-name)})))
+        (let [file-extension (get-extension filename)]
+          (if (is-valid-extension? file-extension)
+            (let [new-file-name (generate-unique-name file-extension)
+                  returned-file
+                  (-> tempfile
+                      read-image-by-file
+                      invert-image
+                      (write-image file-extension
+                                   (str "resources/public/" new-file-name)))]
+                 (response {:url (str (:server-name params) ":" (:server-port params) "/images/" new-file-name)}))
+         (response {:url ""}))))
   (route/resources "/"))
 
 (def app

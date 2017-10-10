@@ -17,5 +17,11 @@
 (testing "get-extension"
   (testing "with valid file name"
     (is (= "jpg" (get-extension "test.jpg")))))
-  
+
+(testing "is-valid-extension?"
+  (testing "with valid extension"
+    (is (true? (is-valid-extension? ".jpg"))))
+  (testing "with invalid extension"
+    (is (nil? (is-valid-extension? ".pdf")))))
+
 (run-all-tests)
