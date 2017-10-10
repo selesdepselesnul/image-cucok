@@ -18,14 +18,10 @@
   (ImageIO/read file))
 
 (defn get-extension [path]
-  (if (nil? (fs/extension path))
-    nil
-    (-> path
-      fs/extension
-      (str/split #"\.")
-      (nth 1 nil))))
-  
-
+  (when-let [extension (fs/extension path)]
+    (-> extension
+        (str/split #"\.")
+        (nth 1 nil)))) 
 
 (defn write-image [image ext dest]
   (let [status
