@@ -10,6 +10,10 @@
             [image-cucok-api.imageproc :refer :all]
             [clojure.java.io :as io]))
 
+(def site-defaults-setting
+  (assoc-in site-defaults
+            [:security :anti-forgery]
+            false))
 
 (defroutes resouce-routes
   (GET "/images/:image"
@@ -33,7 +37,5 @@
   (routes
     resouce-routes
     (-> api-routes
-        (wrap-defaults (assoc-in site-defaults
-                                 [:security :anti-forgery]
-                                 false))
+        (wrap-defaults site-defaults-setting) 
         (wrap-json-response))))
