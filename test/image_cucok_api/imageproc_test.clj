@@ -2,7 +2,9 @@
   (:use [mikera.image.core])
   (:require [clojure.test :refer :all]
             [image-cucok-api.imageproc :refer :all]
-            [clojure.repl :as repl])
+            [mikera.image.core :refer :all]
+            [clojure.repl :as repl]
+            [mikera.image.filters :refer :all])
   (:import java.awt.Image))
 
 (defn invert-image-test [path]
@@ -22,6 +24,6 @@
   (testing "with valid extension"
     (is (true? (is-valid-extension? "jpg"))))
   (testing "with invalid extension"
-    (is (nil? (is-valid-extension? "pdf")))))
+    (is (false? (is-valid-extension? "pdf")))))
 
 (run-all-tests)
