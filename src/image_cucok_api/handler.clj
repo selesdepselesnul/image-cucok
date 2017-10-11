@@ -26,7 +26,7 @@
        [image]
        (resource-response image {:root "public"})))
 
-(defn process [params tempfile filename image-proc-func]
+(defn process-image [params tempfile filename image-proc-func]
   (if-let [file-extension (get-extension filename)]
           (if (is-valid-extension? file-extension)
             (let [new-file-name (generate-unique-name file-extension)
@@ -44,12 +44,12 @@
   
   (POST "/revert"
         {{{tempfile :tempfile filename :filename} :file} :params :as params}
-        (process params tempfile filename invert-image))
+        (process-image params tempfile filename invert-image))
 
   (POST "/brightness"
         {{{tempfile :tempfile filename :filename} :file} :params :as params}
-        (let [val (get (:params params) :val)]
-          (process params tempfile filename (brightness (read-string val)))))
+        (let [val (get (:params params) :value)]
+          (process-image params tempfile filename (brightness (read-string val)))))
 
   (route/resources "/"))
 
