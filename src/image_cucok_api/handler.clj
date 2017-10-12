@@ -62,6 +62,7 @@
   (image-post-req "/blur" process-image (blur))
   (image-post-req "/boxblur" process-image-with-radius box-blur)
   (image-post-req "/noise" process-image (noise))
+  (image-post-req "/emboss" process-image (emboss))
   (route/resources "/"))
 
 (def app
