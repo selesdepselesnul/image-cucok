@@ -40,20 +40,27 @@
      (response {:url ""}))
    (response {:url ""})))
 
+(defn process-image-with-val [params tempfile filename image-proc-func]
+  (let [val (get (:params params) :value)]
+          (process-image params tempfile filename (image-proc-func (read-string val)))))
+
 (defroutes api-routes
   
   (POST "/revert"
         {{{tempfile :tempfile filename :filename} :file} :params :as params}
         (process-image params tempfile filename invert-image))
 
-  (POST "/brightness"
-        {{{tempfile :tempfile filename :filename} :file} :params :as params}
-        (let [val (get (:params params) :value)]
-          (process-image params tempfile filename (brightness (read-string val)))))
-
   (POST "/grayscale"
         {{{tempfile :tempfile filename :filename} :file} :params :as params}
         (process-image params tempfile filename (grayscale)))
+  
+  (POST "/brightness"
+        {{{tempfile :tempfile filename :filename} :file} :params :as params}
+        (process-image-with-val params tempfile filename brightness))
+
+  (POST "/contrast"
+        {{{tempfile :tempfile filename :filename} :file} :params :as params}
+        (process-image-with-val params tempfile filename contrast))
 
   (route/resources "/"))
 
