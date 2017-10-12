@@ -44,6 +44,11 @@
   (let [val (get (:params params) :value)]
           (process-image params tempfile filename (image-proc-func (read-string val)))))
 
+(defn process-image-with-radius [params tempfile filename image-proc-func]
+  (let [h-radius (get (:params params) :hradius)
+        v-radius (get (:params params) :vradius)]
+          (process-image params tempfile filename (image-proc-func (read-string h-radius) (read-string v-radius)))))
+
 (defroutes api-routes
   
   (POST "/revert"
@@ -61,6 +66,14 @@
   (POST "/contrast"
         {{{tempfile :tempfile filename :filename} :file} :params :as params}
         (process-image-with-val params tempfile filename contrast))
+
+  (POST "/blur"
+        {{{tempfile :tempfile filename :filename} :file} :params :as params}
+        (process-image params tempfile filename (blur)))
+  
+  (POST "/boxblur"
+        {{{tempfile :tempfile filename :filename} :file} :params :as params}
+        (process-image-with-radius params tempfile filename box-blur))
 
   (route/resources "/"))
 
