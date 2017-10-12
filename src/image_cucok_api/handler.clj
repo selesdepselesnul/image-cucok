@@ -51,6 +51,10 @@
         (let [val (get (:params params) :value)]
           (process-image params tempfile filename (brightness (read-string val)))))
 
+  (POST "/grayscale"
+        {{{tempfile :tempfile filename :filename} :file} :params :as params}
+        (process-image params tempfile filename (grayscale)))
+
   (route/resources "/"))
 
 (def app
