@@ -49,6 +49,11 @@
         v-radius (get (:params params) :vradius)]
           (process-image params tempfile filename (image-proc-func (read-string h-radius) (read-string v-radius)))))
 
+(defn image-post-req [route req-handler image-proc-func]
+  (POST route
+        {{{tempfile :tempfile filename :filename} :file} :params :as params}
+        (req-handler params tempfile filename image-proc-func)))
+
 (defroutes api-routes
   
   (POST "/revert"
@@ -74,6 +79,8 @@
   (POST "/boxblur"
         {{{tempfile :tempfile filename :filename} :file} :params :as params}
         (process-image-with-radius params tempfile filename box-blur))
+  
+  (image-post-req "/noise" process-image (noise))
 
   (route/resources "/"))
 
