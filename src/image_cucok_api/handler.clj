@@ -55,33 +55,13 @@
         (req-handler params tempfile filename image-proc-func)))
 
 (defroutes api-routes
-  
-  (POST "/revert"
-        {{{tempfile :tempfile filename :filename} :file} :params :as params}
-        (process-image params tempfile filename invert-image))
-
-  (POST "/grayscale"
-        {{{tempfile :tempfile filename :filename} :file} :params :as params}
-        (process-image params tempfile filename (grayscale)))
-  
-  (POST "/brightness"
-        {{{tempfile :tempfile filename :filename} :file} :params :as params}
-        (process-image-with-val params tempfile filename brightness))
-
-  (POST "/contrast"
-        {{{tempfile :tempfile filename :filename} :file} :params :as params}
-        (process-image-with-val params tempfile filename contrast))
-
-  (POST "/blur"
-        {{{tempfile :tempfile filename :filename} :file} :params :as params}
-        (process-image params tempfile filename (blur)))
-  
-  (POST "/boxblur"
-        {{{tempfile :tempfile filename :filename} :file} :params :as params}
-        (process-image-with-radius params tempfile filename box-blur))
-  
+  (image-post-req "/revert" process-image invert-image)
+  (image-post-req "/grayscale" process-image (grayscale))
+  (image-post-req "/brightness" process-image-with-val brightness)
+  (image-post-req "/contrast" process-image-with-val contrast)
+  (image-post-req "/blur" process-image (blur))
+  (image-post-req "/boxblur" process-image-with-radius box-blur)
   (image-post-req "/noise" process-image (noise))
-
   (route/resources "/"))
 
 (def app
